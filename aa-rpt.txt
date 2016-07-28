@@ -1,0 +1,59 @@
+***
+
+This PHP directory converts a xml file,
+created with xtuple Openrp
+into a PHP file that once executed 
+will create a PDF or a XLS
+mi_report.xml -> mi_report.php
+you get mi_report.php typing into terminal:
+# php aPDF.php mi_report.xml >> mi_report.php
+and in the case of xls typing into terminal:
+# php aXLS.php mi_report.xml >> mi_report.php
+
+The developer has to install by his own 
+the open source libraries Fpdf and PHPExcel
+if he is going to see the result of the PHP
+generated.
+
+The developer has also to configure the connection
+to the database which is expected to be a PDO
+conexion loaded into the variable $db.
+
+The developer has to check the things said above in
+the template files (pPA.php or pXA.php) where the 
+location of the connection and library directories
+can be changed although they are not needed during
+the convertion.
+
+Since the conversion is not exact, the developer
+will have to trim some lines of the generated PHP
+and in the complex cases only consider it as a push
+in the location of elements,
+so it is recommended to read the manuals of
+PHPEXcel, Fpdf, PDO.  On the same issue
+it will make your program faster to erase
+the unnecessary changes in font, mainly in the Detail
+section, for instance erase there instructions like:
+ XLS: $xls->getActiveSheet()->getStyle('M'.($iY + 1))->applyFromArray($lsCC);
+ PDF: $this->SetFont('Courier','',11); o $this->SetFontSize(11);
+
+To make a nice use of parameters this program creates
+a pure HTML form to enter new values on the run,
+the bool parameters will be taken as activating filters;
+it also converts, at least partially, openRPT MetaSql,
+that allows to change the query of data on the run
+by changing the filter of the query.
+
+It recognizes heads and feet for pdf but not for page
+for now.
+
+Internally the program reads the templates
+(pPA or pXA), line by line extracting from
+them the labels that will be found later in the xml,
+those labels are extracted along with the
+PHP instructions or functions that such labels
+must be converted to when reading the xml. These
+templates can be expanded to include for instance to draw
+rectangles in the Detail section.
+
+***
